@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+
+        #content {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 0; /* Remove the default margin-bottom */
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="button"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+
+
+
+
+    </style>
+    <title>Attractive Sheet</title>
+</head>
+<body>
+
+<div class="col-lg-10 mx-auto content border p-4">
+    <form id="sheet_form" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-4 text-center">
+                        <label for="job_no">Job No.</label>
+                        <input type="text" id="sheet_id">
+                    </div>
+                    <div class="col-lg-8">
+                        <input class="form-control" id="job_no" name="job_no" type="text" value="{{obj.job_no}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-4 text-center">
+                        <label for="date">Date:</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input class="form-control" id="date" name="date" type="text" value="{{obj.job_no}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-4 text-center">
+                        <label for="name">Name:</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input class="form-control" id="name" name="name" placeholder="enter name" type="text" value="{{obj.name}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-3 mx-auto">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label>Size:</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="size" name="size" placeholder="Enter size" type="text" value="{{obj.size}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 mx-auto">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label>Page:</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="page" name="page" placeholder="Enter page" type="text" value="{{obj.page}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 mx-auto">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label>Sheet:</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="sheet1" name="sheet1" placeholder="Enter sheet" type="text" value="{{obj.sheet1}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 mx-auto">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label>INK:</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="ink" name="ink" placeholder="Enter ink" type="text" value="{{obj.ink}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row mt-3">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="plates_qty">Plates</label>
+                                <input class="form-control" id="plates_qty" name="plates_qty" placeholder="Enter qty"
+                                       type="text" value="{{obj.plates_qty}}">
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label for="plates_rate">Rate</label>
+                                <input class="form-control" id="plates_rate" name="plates_rate" placeholder="Enter amt"
+                                       type="text" value="{{obj.plates_rate}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label for="plates_amt">Amt</label>
+                        <input class="form-control" id="plates_amt" name="plates_amt" placeholder="Enter amt"
+                               readonly type="text" value="{{obj.plates_amt}}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="printing_qty">Printing</label>
+                                <input class="form-control" id="printing_qty" name="printing_qty"
+                                       placeholder="Enter qty"
+                                       type="text" value="{{obj.printing_qty}}">
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label for="printing_rate">Rate</label>
+                                <input class="form-control" id="printing_rate" name="printing_rate"
+                                       placeholder="Enter amt"
+                                       type="text" value="{{obj.printing_rate}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label for="printing_amt">Amt</label>
+                        <input class="form-control" id="printing_amt" name="printing_amt"
+                               placeholder="Enter amt" readonly type="text" value="{{obj.printing_amt}}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-lg-8">
+                        <label for="paper">Paper</label>
+                        <input class="form-control" id="paper" name="paper" type="text" value="{{obj.paper}}">
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label for="paper_amt">Amt</label>
+                        <input class="form-control" id="paper_amt" name="paper_amt" placeholder="Enter amt" type="text" value="{{obj.paper_amt}}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-lg-8">
+                        <label for="lamination">Lamination/UV</label>
+                        <input class="form-control" id="lamination" name="lamination" type="text" value="{{obj.lamination}}">
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label for="lamination_amt">Amt</label>
+                        <input class="form-control" id="lamination_amt" name="lamination_amt" placeholder="Enter amt"
+                               type="text" value="{{obj.lamination_amt}}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-lg-8">
+                        <label for="binding">Binding</label>
+                        <input class="form-control" id="binding" name="binding" type="text" value="{{obj.binding}}">
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label for="binding_amt">Amt</label>
+                        <input class="form-control" id="binding_amt" name="binding_amt" placeholder="Enter amt"
+                               type="text" value="{{obj.binding_amt}}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-lg-8">
+                        <label for="other_gst">Others / GST</label>
+                        <input class="form-control" id="other_gst" name="other_gst" type="text" value="{{obj.other_gst}}">
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label for="gst_amt">Amt</label>
+                        <input class="form-control" id="gst_amt" name="gst_amt" placeholder="Enter amt" type="text" value="{{obj.gst_amt}}">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-4 border">
+                <h5 class="bg-warning text-center">PAPER REQUIRED</h5>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label for="paper_rq_sheet">Sheet</label>
+                        <input class="form-control" id="paper_rq_sheet" name="paper_rq_sheet" placeholder="enter sheet"
+                               type="text" value="{{obj.paper_rq_sheet}}">
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label for="paper_rq_qty">Quality</label>
+                        <input class="form-control" id="paper_rq_qty" name="paper_rq_qty" placeholder="enter quality"
+                               type="text" value="{{obj.paper_rq_qty}}">
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="paper_rq_size">Size</label>
+                                <input class="form-control" id="paper_rq_size" name="paper_rq_size"
+                                       placeholder="enter size"
+                                       type="text" value="{{obj.paper_rq_size}}">
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label for="paper_rq_gsm">GSM</label>
+                                <input class="form-control" id="paper_rq_gsm" name="paper_rq_gsm"
+                                       placeholder="enter GSM"
+                                       type="text" value="{{obj.paper_rq_gsm}}">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label for="paper_rq_vendor">Vendor:</label>
+                        <input class="form-control" id="paper_rq_vendor" name="paper_rq_vendor"
+                               placeholder="enter vendor"
+                               type="text" value="{{obj.paper_rq_vendor}}">
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label for="paper_rq_amt">AMT</label>
+                        <input class="form-control" id="paper_rq_amt" name="paper_rq_amt" placeholder="enter AMT"
+                               type="text" value="{{obj.paper_rq_amt}}">
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="paper_rq_date">Date:</label>
+                                <input class="form-control" id="paper_rq_date" name="paper_rq_date"
+                                       placeholder="enter date"
+                                       type="text" value="{{obj.job_no}}">
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label for="paper_rq_bank">Bank:</label>
+                                <input class="form-control" id="paper_rq_bank" name="paper_rq_bank"
+                                       placeholder="enter bank"
+                                       type="text" value="{{obj.paper_rq_bank}}">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-2 p-1">
+                <input class="form-control" id="search" name="search" placeholder="Search" type="text">
+            </div>
+
+            <div class="col-lg-2 p-1">
+                <label for="total_this_bill">Total this bill </label>
+                <input class="form-control" id="total_this_bill" name="total_this_bill" type="text" value="{{obj.job_no}}">
+            </div>
+
+            <div class="col-lg-2 p-1">
+                <label for="previous_bill">Previous bill</label>
+                <input class="form-control" id="previous_bill" name="previous_bill" type="text" value="{{obj.job_no}}">
+            </div>
+
+            <div class="col-lg-2 p-1">
+                <label for="paid">Paid</label>
+                <input class="form-control" id="paid" name="paid" type="text" value="{{obj.job_no}}">
+            </div>
+
+            <div class="col-lg-2 p-1">
+                <label for="closing_bal">Closing Bal</label>
+                <input class="form-control" id="closing_bal" name="closing_bal" type="text" value="{{obj.job_no}}">
+            </div>
+
+        </div>
+    </form>
+
+
+    <div class="row">
+        <div class="col-lg-12 mb-3">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-3 p-1">
+                            <input class="btn btn-primary" onclick="get_top_bottom_sheet('top')" id="top" name="top" type="button" value="TOP">
+                        </div>
+                        <div class="col-lg-3 p-1">
+                            <input class="btn btn-primary" onclick="get_pre_and_next_sheet('pre')"  id="previous" name="previous" type="button" value="PREVIOUS">
+                        </div>
+                        <div class="col-lg-3 p-1">
+                            <input class="btn btn-primary" onclick="get_pre_and_next_sheet('next')"  id="next" name="next" type="button" value="NEXT">
+                        </div>
+                        <div class="col-lg-3 p-1">
+                            <input class="btn btn-primary" onclick="get_top_bottom_sheet('bottom')"  id="bottom" name="bottom" type="button" value="BOTTOM">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-3 p-1">
+                            <input class="btn btn-primary" id="new" name="new" type="button" value="NEW">
+                        </div>
+                        <div class="col-lg-3 p-1">
+                            {% if id == 0 %}
+                            <input class="btn btn-primary" id="save_and_update" name="edit" type="button" value="Save">
+                            {% else %}
+                            <input class="btn btn-primary" id="save_and_update" name="edit" type="button" value="Update">
+                            {% endif %}
+                        </div>
+
+                        <div class="col-lg-3 p-1">
+                            <input class="btn btn-primary" id="reports" name="reports" type="button" value="REPORTS">
+                        </div>
+
+                        <div class="col-lg-3 p-1">
+                            {% if id == 0 %}
+                                <input disabled class="btn btn-primary" id="email" name="email" type="button" value="EMAIL">
+                            {% else %}
+                                <input class="btn btn-primary" id="email" name="email" type="button" value="EMAIL">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editor"></div>
+
+<!--<script src="/static/js/jquery360.min.js"></script>-->
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+<link href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'}).datepicker('setDate', 'today');
+    });
+
+
+</script>
+
+<script>
+
+    $( "#save_and_update" ).on( "click", function() {
+        event.preventDefault();
+        var sheet_id = $('#sheet_id').val();
+        if(sheet_id != ''){
+            sheet_id = sheet_id
+        }else{
+            sheet_id = '{{id}}'
+        }
+        var form_date = $('#sheet_form').serialize()
+        $.ajax(
+        {
+            type:"POST",
+            url: "/"+sheet_id+"/",
+            data:form_date,
+            success: function( data )
+            {
+                window.location.href = '/'+data.id+'/'
+            }
+        })
+    });
+
+    $( "#reports" ).on( "click", function() {
+        window.location.href = '/report/'
+    });
+
+    $( "#new" ).on( "click", function() {
+        window.location.href = '/'
+    });
+
+    $( "#search" ).on( "keyup", function() {
+        $('#sheet_id').val('')
+        $('#job_no').val('')
+        $('#date').val('')
+        $('#name').val('')
+        $('#size').val('')
+        $('#page').val('')
+        $('#sheet1').val('')
+        $('#ink').val('')
+        $('#plates_qty').val('')
+        $('#plates_rate').val('')
+        $('#plates_amt').val('')
+        $('#printing_qty').val('')
+        $('#printing_rate').val('')
+        $('#printing_amt').val('')
+        $('#paper').val('')
+        $('#paper_amt').val('')
+        $('#lamination').val('')
+        $('#lamination_amt').val('')
+        $('#binding').val('')
+        $('#binding_amt').val('')
+        $('#other_gst').val('')
+        $('#gst_amt').val('')
+        $('#total_this_bill').val('')
+        $('#previous_bill').val('')
+        $('#paid').val('')
+        $('#closing_bal').val('')
+        $('#paper_rq_sheet').val('')
+        $('#paper_rq_qty').val('')
+        $('#paper_rq_size').val('')
+        $('#paper_rq_gsm').val('')
+        $('#paper_rq_vendor').val('')
+        $('#paper_rq_amt').val('')
+        $('#paper_rq_date').val('')
+        $('#paper_rq_bank').val('')
+
+        var value = $(this).val().trim();
+        var myObject = {'search': value}
+
+        $.ajax({
+            url: '/get_search_sheet/',
+            method: 'GET',
+            data: myObject,
+            success: function (response) {
+                var responseData = response;
+                console.log(response)
+                $('#sheet_id').val(responseData.id)
+                $('#job_no').val(responseData.job_no)
+                $('#date').val(responseData.date)
+                $('#name').val(responseData.name)
+                $('#size').val(responseData.size)
+                $('#page').val(responseData.page)
+                $('#sheet1').val(responseData.sheet1)
+                $('#ink').val(responseData.ink)
+                $('#plates_qty').val(responseData.plates_qty)
+                $('#plates_rate').val(responseData.plates_rate)
+                $('#plates_amt').val(responseData.plates_amt)
+                $('#printing_qty').val(responseData.printing_qty)
+                $('#printing_rate').val(responseData.printing_rate)
+                $('#printing_amt').val(responseData.printing_amt)
+                $('#paper').val(responseData.paper)
+                $('#paper_amt').val(responseData.paper_amt)
+                $('#lamination').val(responseData.lamination)
+                $('#lamination_amt').val(responseData.lamination_amt)
+                $('#binding').val(responseData.binding)
+                $('#binding_amt').val(responseData.binding_amt)
+                $('#other_gst').val(responseData.other_gst)
+                $('#gst_amt').val(responseData.gst_amt)
+                $('#total_this_bill').val(responseData.total_this_bill)
+                $('#previous_bill').val(responseData.previous_bill)
+                $('#paid').val(responseData.paid)
+                $('#closing_bal').val(responseData.closing_bal)
+                $('#paper_rq_sheet').val(responseData.paper_rq_sheet)
+                $('#paper_rq_qty').val(responseData.paper_rq_qty)
+                $('#paper_rq_size').val(responseData.paper_rq_size)
+                $('#paper_rq_gsm').val(responseData.paper_rq_gsm)
+                $('#paper_rq_vendor').val(responseData.paper_rq_vendor)
+                $('#paper_rq_amt').val(responseData.paper_rq_amt)
+                $('#paper_rq_date').val(responseData.paper_rq_date)
+                $('#paper_rq_bank').val(responseData.paper_rq_bank)
+
+            },
+            error: function (xhr, status, error) {
+                // Handle error here
+                console.log(error);
+            }
+        });
+    });
+
+    function get_pre_and_next_sheet(str){
+        var global_id = '{{id}}'
+        var sheet_id = $('#sheet_id').val();
+
+        if(global_id != 0 && global_id != ''){
+            id = global_id
+        }else if(sheet_id != ''){
+            id = sheet_id
+        }else{
+            id = 0
+        }
+
+        if( id != 0){
+            window.location.href = '/get_pre_and_next_sheet/'+id+'/'+str+'/'
+        }else{
+            alert('please select first top or bottom sheet')
+        }
+
+    }
+
+    function get_top_bottom_sheet(str){
+        window.location.href = '/get_top_bottom_sheet/'+str+'/'
+    }
+
+
+
+
+</script>
+
+ <script>
+        $('#email').click(function() {
+            const pdf = new jsPDF({
+                orientation: 'portrait', // Portrait orientation
+                unit: 'mm', // Units: millimeters
+                format: 'a4', // Page format: A4
+            });
+            const content = $('#content')[0];
+            html2canvas(content, { scale: 2 }).then(function(canvas) {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210; // A4 page width in mm
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                pdf.addImage(imgData, 'PNG', 0, 10, imgWidth, imgHeight);
+                pdf.save('sheet.pdf');
+            });
+        });
+    </script>
+
+
+</body>
+</html>
