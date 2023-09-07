@@ -68,96 +68,70 @@
         input[type="button"]:hover {
             background-color: #0056b3;
         }
-
-
-
-
-
     </style>
-    <title>Attractive Sheet</title>
+    <title>Sheet Report</title>
 </head>
 <body>
 
-<div class="col-lg-10 mx-auto content border p-4">
-    <form id="sheet_form" enctype="multipart/form-data">{% csrf_token %}
+<div class="col-lg-10 mx-auto content mt-3">
+    <form class="mb-2" enctype="multipart/form-data" id="sheet_form">{% csrf_token %}
+        <input id="sheet_id" type="hidden">
         <div class="row mb-3">
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-lg-4 text-center">
-                        <label for="job_no">Job No.</label>
-                        <input type="text" id="sheet_id">
-                    </div>
-                    <div class="col-lg-8">
-                        <input class="form-control" id="job_no" name="job_no" type="text" value="{{obj.job_no}}">
-                    </div>
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <label class="input-group-text" for="job_no">Job No.</label>
+                    <input class="form-control" id="job_no" name="job_no" type="text" value="{{obj.job_no}}">
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-lg-4 text-center">
-                        <label for="date">Date:</label>
-                    </div>
-                    <div class="col-lg-8">
-                        <input class="form-control" id="date" name="date" type="text" value="{{obj.job_no}}">
-                    </div>
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <label class="input-group-text" for="job_no">Date</label>
+                    <input class="form-control" id="date" name="date" type="text" value="{{obj.date}}">
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-lg-4 text-center">
-                        <label for="name">Name:</label>
-                    </div>
-                    <div class="col-lg-8">
-                        <input class="form-control" id="name" name="name" placeholder="enter name" type="text" value="{{obj.name}}">
-                    </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <label class="input-group-text">Name</label>
+                    <input class="form-control" id="name" name="name" placeholder="enter name" type="text"
+                           value="{{obj.name}}">
                 </div>
             </div>
+
         </div>
 
         <div class="row mb-3">
+
             <div class="col-lg-3 mx-auto">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <label>Size:</label>
-                    </div>
-                    <div class="col-lg-10">
-                        <input class="form-control" id="size" name="size" placeholder="Enter size" type="text" value="{{obj.size}}">
-                    </div>
+                <div class="input-group">
+                    <label class="input-group-text">Size</label>
+                    <input class="form-control" id="size" name="size" placeholder="Enter size" type="text"
+                           value="{{obj.size}}">
                 </div>
             </div>
 
             <div class="col-lg-3 mx-auto">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <label>Page:</label>
-                    </div>
-                    <div class="col-lg-10">
-                        <input class="form-control" id="page" name="page" placeholder="Enter page" type="text" value="{{obj.page}}">
-                    </div>
+                <div class="input-group">
+                    <label class="input-group-text">Page</label>
+                    <input class="form-control" id="page" name="page" placeholder="Enter page" type="text"
+                           value="{{obj.page}}">
                 </div>
             </div>
 
             <div class="col-lg-3 mx-auto">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <label>Sheet:</label>
-                    </div>
-                    <div class="col-lg-10">
-                        <input class="form-control" id="sheet1" name="sheet1" placeholder="Enter sheet" type="text" value="{{obj.sheet1}}">
-                    </div>
+                <div class="input-group">
+                    <label class="input-group-text">Sheet</label>
+                    <input class="form-control" id="sheet1" name="sheet1" placeholder="Enter sheet" type="text"
+                           value="{{obj.sheet1}}">
                 </div>
             </div>
 
             <div class="col-lg-3 mx-auto">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <label>INK:</label>
-                    </div>
-                    <div class="col-lg-10">
-                        <input class="form-control" id="ink" name="ink" placeholder="Enter ink" type="text" value="{{obj.ink}}">
-                    </div>
+                <div class="input-group">
+                    <label class="input-group-text">INK</label>
+                    <input class="form-control" id="ink" name="ink" placeholder="Enter ink" type="text"
+                           value="{{obj.ink}}">
                 </div>
             </div>
         </div>
@@ -169,23 +143,31 @@
                     <div class="col-lg-8">
                         <div class="row">
                             <div class="col-lg-6">
-                                <label for="plates_qty">Plates</label>
-                                <input class="form-control" id="plates_qty" name="plates_qty" placeholder="Enter qty"
-                                       type="text" value="{{obj.plates_qty}}">
+                                <div class="input-group">
+                                    <label class="input-group-text">Plates</label>
+                                    <input class="form-control" id="plates_qty" name="plates_qty"
+                                           placeholder="Enter qty"
+                                           type="text" value="{{obj.plates_qty}}">
+                                </div>
                             </div>
 
                             <div class="col-lg-6">
-                                <label for="plates_rate">Rate</label>
-                                <input class="form-control" id="plates_rate" name="plates_rate" placeholder="Enter amt"
-                                       type="text" value="{{obj.plates_rate}}">
+                                <div class="input-group">
+                                    <label class="input-group-text">Rate</label>
+                                    <input class="form-control" id="plates_rate" name="plates_rate"
+                                           placeholder="Enter amt"
+                                           type="text" value="{{obj.plates_rate}}">
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4">
-                        <label for="plates_amt">Amt</label>
-                        <input class="form-control" id="plates_amt" name="plates_amt" placeholder="Enter amt"
-                               readonly type="text" value="{{obj.plates_amt}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Amt</label>
+                            <input class="form-control" id="plates_amt" name="plates_amt" placeholder="Enter amt"
+                                   type="text" value="{{obj.plates_amt}}">
+                        </div>
                     </div>
                 </div>
 
@@ -193,148 +175,197 @@
                     <div class="col-lg-8">
                         <div class="row">
                             <div class="col-lg-6">
-                                <label for="printing_qty">Printing</label>
-                                <input class="form-control" id="printing_qty" name="printing_qty"
-                                       placeholder="Enter qty"
-                                       type="text" value="{{obj.printing_qty}}">
+                                <div class="input-group">
+                                    <label class="input-group-text">Printing</label>
+                                    <input class="form-control" id="printing_qty" name="printing_qty"
+                                           placeholder="Enter qty"
+                                           type="text" value="{{obj.printing_qty}}">
+                                </div>
                             </div>
 
+
                             <div class="col-lg-6">
-                                <label for="printing_rate">Rate</label>
-                                <input class="form-control" id="printing_rate" name="printing_rate"
-                                       placeholder="Enter amt"
-                                       type="text" value="{{obj.printing_rate}}">
+                                <div class="input-group">
+                                    <label class="input-group-text">Rate</label>
+                                    <input class="form-control" id="printing_rate" name="printing_rate"
+                                           placeholder="Enter amt"
+                                           type="text" value="{{obj.printing_rate}}">
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4">
-                        <label for="printing_amt">Amt</label>
-                        <input class="form-control" id="printing_amt" name="printing_amt"
-                               placeholder="Enter amt" readonly type="text" value="{{obj.printing_amt}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Amt</label>
+                            <input class="form-control" id="printing_amt" name="printing_amt"
+                                   placeholder="Enter amt" type="text" value="{{obj.printing_amt}}">
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-lg-8">
-                        <label for="paper">Paper</label>
-                        <input class="form-control" id="paper" name="paper" type="text" value="{{obj.paper}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Paper</label>
+                            <input class="form-control" id="paper" name="paper" type="text" value="{{obj.paper}}">
+                        </div>
                     </div>
 
                     <div class="col-lg-4">
-                        <label for="paper_amt">Amt</label>
-                        <input class="form-control" id="paper_amt" name="paper_amt" placeholder="Enter amt" type="text" value="{{obj.paper_amt}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Amt</label>
+                            <input class="form-control" id="paper_amt" name="paper_amt" placeholder="Enter amt"
+                                   type="text"
+                                   value="{{obj.paper_amt}}">
+                        </div>
+
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-lg-8">
-                        <label for="lamination">Lamination/UV</label>
-                        <input class="form-control" id="lamination" name="lamination" type="text" value="{{obj.lamination}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Lamination/UV</label>
+                            <input class="form-control" id="lamination" name="lamination" type="text"
+                                   value="{{obj.lamination}}">
+                        </div>
+
                     </div>
 
                     <div class="col-lg-4">
-                        <label for="lamination_amt">Amt</label>
-                        <input class="form-control" id="lamination_amt" name="lamination_amt" placeholder="Enter amt"
-                               type="text" value="{{obj.lamination_amt}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Amt</label>
+                            <input class="form-control" id="lamination_amt" name="lamination_amt"
+                                   placeholder="Enter amt"
+                                   type="text" value="{{obj.lamination_amt}}">
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-lg-8">
-                        <label for="binding">Binding</label>
-                        <input class="form-control" id="binding" name="binding" type="text" value="{{obj.binding}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Binding</label>
+                            <input class="form-control" id="binding" name="binding" type="text" value="{{obj.binding}}">
+                        </div>
                     </div>
 
                     <div class="col-lg-4">
-                        <label for="binding_amt">Amt</label>
-                        <input class="form-control" id="binding_amt" name="binding_amt" placeholder="Enter amt"
-                               type="text" value="{{obj.binding_amt}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Amt</label>
+                            <input class="form-control" id="binding_amt" name="binding_amt" placeholder="Enter amt"
+                                   type="text" value="{{obj.binding_amt}}">
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-lg-8">
-                        <label for="other_gst">Others / GST</label>
-                        <input class="form-control" id="other_gst" name="other_gst" type="text" value="{{obj.other_gst}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Others / GST</label>
+                            <input class="form-control" id="other_gst" name="other_gst" type="text"
+                                   value="{{obj.other_gst}}">
+                        </div>
                     </div>
 
                     <div class="col-lg-4">
-                        <label for="gst_amt">Amt</label>
-                        <input class="form-control" id="gst_amt" name="gst_amt" placeholder="Enter amt" type="text" value="{{obj.gst_amt}}">
+                        <div class="input-group">
+                            <label class="input-group-text">Amt</label>
+                            <input class="form-control" id="gst_amt" name="gst_amt" placeholder="Enter amt" type="text"
+                                   value="{{obj.gst_amt}}">
+                        </div>
                     </div>
                 </div>
 
             </div>
 
 
-            <div class="col-lg-4 border">
-                <h5 class="bg-warning text-center">PAPER REQUIRED</h5>
+            <div class="col-lg-4">
+                <h5 class="border bg-warning text-center rounded-pill">PAPER REQUIRED</h5>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <label for="paper_rq_sheet">Sheet</label>
-                        <input class="form-control" id="paper_rq_sheet" name="paper_rq_sheet" placeholder="enter sheet"
-                               type="text" value="{{obj.paper_rq_sheet}}">
+                    <div class="col-lg-12 mb-3">
+                        <div class="input-group">
+                            <label class="input-group-text">Sheet</label>
+                            <input class="form-control" id="paper_rq_sheet" name="paper_rq_sheet"
+                                   placeholder="enter sheet"
+                                   type="text" value="{{obj.paper_rq_sheet}}">
+                        </div>
                     </div>
 
-                    <div class="col-lg-12">
-                        <label for="paper_rq_qty">Quality</label>
-                        <input class="form-control" id="paper_rq_qty" name="paper_rq_qty" placeholder="enter quality"
-                               type="text" value="{{obj.paper_rq_qty}}">
+                    <div class="col-lg-12 mb-3">
+                        <div class="input-group">
+                            <label class="input-group-text">Quality</label>
+                            <input class="form-control" id="paper_rq_qty" name="paper_rq_qty"
+                                   placeholder="enter quality"
+                                   type="text" value="{{obj.paper_rq_qty}}">
+                        </div>
                     </div>
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 mb-3">
                         <div class="row">
                             <div class="col-lg-6">
-                                <label for="paper_rq_size">Size</label>
-                                <input class="form-control" id="paper_rq_size" name="paper_rq_size"
-                                       placeholder="enter size"
-                                       type="text" value="{{obj.paper_rq_size}}">
+                                <div class="input-group">
+                                    <label class="input-group-text">Size</label>
+                                    <input class="form-control" id="paper_rq_size" name="paper_rq_size"
+                                           placeholder="enter size"
+                                           type="text" value="{{obj.paper_rq_size}}">
+                                </div>
                             </div>
 
                             <div class="col-lg-6">
-                                <label for="paper_rq_gsm">GSM</label>
-                                <input class="form-control" id="paper_rq_gsm" name="paper_rq_gsm"
-                                       placeholder="enter GSM"
-                                       type="text" value="{{obj.paper_rq_gsm}}">
+                                <div class="input-group">
+                                    <label class="input-group-text">GSM</label>
+                                    <input class="form-control" id="paper_rq_gsm" name="paper_rq_gsm"
+                                           placeholder="enter GSM"
+                                           type="text" value="{{obj.paper_rq_gsm}}">
+                                </div>
                             </div>
 
                         </div>
                     </div>
 
-                    <div class="col-lg-12">
-                        <label for="paper_rq_vendor">Vendor:</label>
-                        <input class="form-control" id="paper_rq_vendor" name="paper_rq_vendor"
-                               placeholder="enter vendor"
-                               type="text" value="{{obj.paper_rq_vendor}}">
+                    <div class="col-lg-12 mb-3">
+                        <div class="input-group">
+                            <label class="input-group-text">Vendor</label>
+                            <input class="form-control" id="paper_rq_vendor" name="paper_rq_vendor"
+                                   placeholder="enter vendor"
+                                   type="text" value="{{obj.paper_rq_vendor}}">
+                        </div>
+
                     </div>
 
-                    <div class="col-lg-12">
-                        <label for="paper_rq_amt">AMT</label>
-                        <input class="form-control" id="paper_rq_amt" name="paper_rq_amt" placeholder="enter AMT"
-                               type="text" value="{{obj.paper_rq_amt}}">
+                    <div class="col-lg-12 mb-3">
+                        <div class="input-group">
+                            <label class="input-group-text">AMT</label>
+                            <input class="form-control" id="paper_rq_amt" name="paper_rq_amt" placeholder="enter AMT"
+                                   type="text" value="{{obj.paper_rq_amt}}">
+                        </div>
                     </div>
 
 
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-6">
-                                <label for="paper_rq_date">Date:</label>
-                                <input class="form-control" id="paper_rq_date" name="paper_rq_date"
-                                       placeholder="enter date"
-                                       type="text" value="{{obj.job_no}}">
+                                <div class="input-group">
+                                    <label class="input-group-text">Date</label>
+                                    <input class="form-control" id="paper_rq_date" name="paper_rq_date"
+                                           placeholder="enter date"
+                                           type="text" value="{{obj.job_no}}">
+                                </div>
                             </div>
 
                             <div class="col-lg-6">
-                                <label for="paper_rq_bank">Bank:</label>
-                                <input class="form-control" id="paper_rq_bank" name="paper_rq_bank"
-                                       placeholder="enter bank"
-                                       type="text" value="{{obj.paper_rq_bank}}">
+                                <div class="input-group">
+                                    <label class="input-group-text">Bank</label>
+                                    <input class="form-control" id="paper_rq_bank" name="paper_rq_bank"
+                                           placeholder="enter bank"
+                                           type="text" value="{{obj.paper_rq_bank}}">
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -342,28 +373,33 @@
 
 
         <div class="row">
-            <div class="col-lg-2 p-1">
-                <input class="form-control" id="search" name="search" placeholder="Search" type="text">
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <label class="input-group-text">Total this bill</label>
+                    <input class="form-control" id="total_this_bill" name="total_this_bill" type="text"
+                       value="{{obj.job_no}}">
+                </div>
             </div>
 
-            <div class="col-lg-2 p-1">
-                <label for="total_this_bill">Total this bill </label>
-                <input class="form-control" id="total_this_bill" name="total_this_bill" type="text" value="{{obj.job_no}}">
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <label class="input-group-text">Previous bill</label>
+                    <input class="form-control" id="previous_bill" name="previous_bill" type="text" value="{{obj.job_no}}">
+                </div>
             </div>
 
-            <div class="col-lg-2 p-1">
-                <label for="previous_bill">Previous bill</label>
-                <input class="form-control" id="previous_bill" name="previous_bill" type="text" value="{{obj.job_no}}">
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <label class="input-group-text">Paid</label>
+                    <input class="form-control" id="paid" name="paid" type="text" value="{{obj.job_no}}">
+                </div>
             </div>
 
-            <div class="col-lg-2 p-1">
-                <label for="paid">Paid</label>
-                <input class="form-control" id="paid" name="paid" type="text" value="{{obj.job_no}}">
-            </div>
-
-            <div class="col-lg-2 p-1">
-                <label for="closing_bal">Closing Bal</label>
-                <input class="form-control" id="closing_bal" name="closing_bal" type="text" value="{{obj.job_no}}">
+            <div class="col-lg-3">
+                <div class="input-group">
+                    <label class="input-group-text">Closing Bal</label>
+                    <input class="form-control" id="closing_bal" name="closing_bal" type="text" value="{{obj.job_no}}">
+                </div>
             </div>
 
         </div>
@@ -371,21 +407,25 @@
 
 
     <div class="row">
-        <div class="col-lg-12 mb-3">
+        <div class="col-lg-12 mb-2">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="row">
-                        <div class="col-lg-3 p-1">
-                            <input class="btn btn-primary" onclick="get_top_bottom_sheet('top')" id="top" name="top" type="button" value="TOP">
+                        <div class="col-lg-3">
+                            <input class="btn btn-primary" id="top" name="top" onclick="get_top_bottom_sheet('top')"
+                                   type="button" value="TOP">
                         </div>
-                        <div class="col-lg-3 p-1">
-                            <input class="btn btn-primary" onclick="get_pre_and_next_sheet('pre')"  id="previous" name="previous" type="button" value="PREVIOUS">
+                        <div class="col-lg-3">
+                            <input class="btn btn-primary" id="previous" name="previous"
+                                   onclick="get_pre_and_next_sheet('pre')" type="button" value="PREVIOUS">
                         </div>
-                        <div class="col-lg-3 p-1">
-                            <input class="btn btn-primary" onclick="get_pre_and_next_sheet('next')"  id="next" name="next" type="button" value="NEXT">
+                        <div class="col-lg-3">
+                            <input class="btn btn-primary" id="next" name="next"
+                                   onclick="get_pre_and_next_sheet('next')" type="button" value="NEXT">
                         </div>
-                        <div class="col-lg-3 p-1">
-                            <input class="btn btn-primary" onclick="get_top_bottom_sheet('bottom')"  id="bottom" name="bottom" type="button" value="BOTTOM">
+                        <div class="col-lg-3">
+                            <input class="btn btn-primary" id="bottom" name="bottom"
+                                   onclick="get_top_bottom_sheet('bottom')" type="button" value="BOTTOM">
                         </div>
                     </div>
                 </div>
@@ -400,7 +440,8 @@
                             {% if id == 0 %}
                             <input class="btn btn-primary" id="save_and_update" name="edit" type="button" value="Save">
                             {% else %}
-                            <input class="btn btn-primary" id="save_and_update" name="edit" type="button" value="Update">
+                            <input class="btn btn-primary" id="save_and_update" name="edit" type="button"
+                                   value="Update">
                             {% endif %}
                         </div>
 
@@ -410,15 +451,18 @@
 
                         <div class="col-lg-3 p-1">
                             {% if id == 0 %}
-                                <input disabled class="btn btn-primary" id="email" name="email" type="button" value="EMAIL">
+                            <input class="btn btn-primary" disabled id="email" name="email" type="button" value="EMAIL">
                             {% else %}
-                                <input class="btn btn-primary" id="email" name="email" type="button" value="EMAIL">
+                            <input class="btn btn-primary" id="email" name="email" type="button" value="EMAIL">
                             {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-lg-8 mx-auto">
+        <input class="text-center border border-success" id="search" name="search" placeholder="Search here for your recorded sheet" type="text">
     </div>
 </div>
 
@@ -441,10 +485,9 @@
 
 <script>
     $(document).ready(function() {
-        $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'}).datepicker('setDate', 'today');
+<!--        $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'}).datepicker('setDate', 'today');-->
+<!--        $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'}).datepicker('setDate', 'today');-->
     });
-
-
 </script>
 
 <script>
@@ -594,9 +637,12 @@
 
 
 
+
+
+
 </script>
 
- <script>
+<script>
         $('#email').click(function() {
             const pdf = new jsPDF({
                 orientation: 'portrait', // Portrait orientation
@@ -612,7 +658,10 @@
                 pdf.save('sheet.pdf');
             });
         });
-    </script>
+
+
+
+</script>
 
 
 </body>
