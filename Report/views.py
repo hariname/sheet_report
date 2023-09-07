@@ -1,9 +1,30 @@
 from datetime import datetime
 
+from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.shortcuts import render
-
+from django.views.decorators.csrf import csrf_exempt
 from .models import SheetReport
+
+def convert_date(date_string, output_format='%Y-%m-%d'):
+    date_object = datetime.strptime(date_string, '%Y-%m-%d')
+    formatted_date = date_object.strftime(output_format)
+    return formatted_date
+
+@csrf_exempt
+def save_pdf_to_model(request):
+    if request.method == 'POST':
+        pdf_content = request.POST.get('pdf_data')  # Assuming you send the PDF as a file.
+        if pdf_content:
+            recipient_list = 'srbc500@gmail.com'
+            message = f"HELLO sanjay"
+            subject = 'Your sheet Generated'
+            from_email = 'info@sanjay.solutions'
+            # Create an EmailMessage instance
+            email = EmailMessage(subject, message, from_email, [recipient_list])
+            email.attach("your_pdf_filename.pdf", pdf_content, 'application/pdf')  # Attach the PDF
+            email.send()
+            return JsonResponse({'success': True})
 
 
 def get_top_bottom_sheet(request, query=''):
@@ -91,6 +112,8 @@ def home_page(request, id=0):
         form = request.POST
         job_no = form.get('job_no')
         date = form.get('date')
+        date = convert_date(date)
+        print(date,'===========================date')
         name = form.get('name')
         size = form.get('size')
         page = form.get('page')

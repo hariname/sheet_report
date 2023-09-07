@@ -8,20 +8,17 @@
 
     <!-- Bootstrap CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
-<!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>-->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
 
-<!--    <link href="https://fonts.googleapis.com" rel="preconnect">-->
-<!--    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">-->
-<!--    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">-->
     <style>
-        #content {
-            text-align: center;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+<!--        #content {-->
+<!--            text-align: center;-->
+<!--            position: absolute;-->
+<!--            top: 50%;-->
+<!--            left: 50%;-->
+<!--            transform: translate(-50%, -50%);-->
+<!--        }-->
 
         body {
             background-color: #f8f9fa;
@@ -65,11 +62,12 @@
         input[type="button"]:hover {
             background-color: #0056b3;
         }
+
     </style>
     <title>Sheet Report</title>
 </head>
 <body>
-<div class="col-lg-10 mx-auto content mt-4">
+<div class="container mx-auto content mt-4">
     <form class="mb-2" enctype="multipart/form-data" id="sheet_form">{% csrf_token %}
         <input id="sheet_id" type="hidden">
         <div class="row mb-3">
@@ -83,7 +81,7 @@
             <div class="col-lg-3">
                 <div class="input-group">
                     <label class="input-group-text" for="job_no">Date</label>
-                    <input class="form-control" id="date" name="date" type="text" value="{{obj.date}}">
+                    <input class="form-control" id="date" name="date" type="text" value="{{obj.date|date:'Y-m-d'}}">
                 </div>
             </div>
 
@@ -372,14 +370,15 @@
                 <div class="input-group">
                     <label class="input-group-text">Total this bill</label>
                     <input class="form-control" id="total_this_bill" name="total_this_bill" type="text"
-                       value="{{obj.job_no}}">
+                           value="{{obj.job_no}}">
                 </div>
             </div>
 
             <div class="col-lg-3">
                 <div class="input-group">
                     <label class="input-group-text">Previous bill</label>
-                    <input class="form-control" id="previous_bill" name="previous_bill" type="text" value="{{obj.job_no}}">
+                    <input class="form-control" id="previous_bill" name="previous_bill" type="text"
+                           value="{{obj.job_no}}">
                 </div>
             </div>
 
@@ -407,7 +406,8 @@
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-3">
-                            <input class="btn btn-sm btn-primary" id="top" name="top" onclick="get_top_bottom_sheet('top')"
+                            <input class="btn btn-sm btn-primary" id="top" name="top"
+                                   onclick="get_top_bottom_sheet('top')"
                                    type="button" value="TOP">
                         </div>
                         <div class="col-lg-3">
@@ -433,7 +433,8 @@
                         </div>
                         <div class="col-lg-3">
                             {% if id == 0 %}
-                            <input class="btn btn-sm btn-primary" id="save_and_update" name="edit" type="button" value="Save">
+                            <input class="btn btn-sm btn-primary" id="save_and_update" name="edit" type="button"
+                                   value="Save">
                             {% else %}
                             <input class="btn btn-sm btn-primary" id="save_and_update" name="edit" type="button"
                                    value="Update">
@@ -441,12 +442,14 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <input class="btn btn-sm btn-primary" id="reports" name="reports" type="button" value="REPORTS">
+                            <input class="btn btn-sm btn-primary" id="reports" name="reports" type="button"
+                                   value="REPORTS">
                         </div>
 
                         <div class="col-lg-3">
                             {% if id == 0 %}
-                            <input class="btn btn-sm btn-primary" disabled id="email" name="email" type="button" value="EMAIL">
+                            <input class="btn btn-sm btn-primary" disabled id="email" name="email" type="button"
+                                   value="EMAIL">
                             {% else %}
                             <input class="btn btn-sm btn-primary" id="email" name="email" type="button" value="EMAIL">
                             {% endif %}
@@ -456,7 +459,8 @@
             </div>
         </div>
         <div class="col-lg-4 mt-3">
-            <input class="text-center border-success" id="search" name="search" placeholder="Search here for your recorded sheet" type="text">
+            <input class="text-center border-success" id="search" name="search"
+                   placeholder="Search here for your recorded sheet" type="text">
         </div>
     </div>
 
@@ -478,12 +482,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 
-
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
 <script>
     $(document).ready(function() {
-<!--        $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'}).datepicker('setDate', 'today');-->
-<!--        $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'}).datepicker('setDate', 'today');-->
+        var pre_date = $('#date').val();
+        if(pre_date == ''){
+            $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'}).datepicker('setDate', 'today');
+        }else{
+            $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'})
+        }
     });
+
 </script>
 
 <script>
@@ -630,35 +640,99 @@
         window.location.href = '/get_top_bottom_sheet/'+str+'/'
     }
 
-
-
-
-
-
-
 </script>
 
 <script>
+<!--        $('#email').click(function() {-->
+<!--            const pdf = new jsPDF({-->
+<!--                orientation: 'portrait', // Portrait orientation-->
+<!--                unit: 'mm', // Units: millimeters-->
+<!--                format: 'a4', // Page format: A4-->
+<!--            });-->
+<!--            const content = $('#content')[0];-->
+<!--            html2canvas(content, { scale: 2 }).then(function(canvas) {-->
+<!--                const imgData = canvas.toDataURL('image/png');-->
+<!--                const imgWidth = 210; // A4 page width in mm-->
+<!--                const imgHeight = canvas.height * imgWidth / canvas.width;-->
+<!--                pdf.addImage(imgData, 'PNG', 0, 10, imgWidth, imgHeight);-->
+<!--                pdf.save('sheet.pdf');-->
+<!--            });-->
+<!--        });-->
+
+
         $('#email').click(function() {
             const pdf = new jsPDF({
-                orientation: 'portrait', // Portrait orientation
-                unit: 'mm', // Units: millimeters
-                format: 'a4', // Page format: A4
+                orientation: 'landscape',
+                unit: 'mm',
+                format: 'a4',
             });
+
             const content = $('#content')[0];
-            html2canvas(content, { scale: 2 }).then(function(canvas) {
-                const imgData = canvas.toDataURL('image/png');
-                const imgWidth = 210; // A4 page width in mm
-                const imgHeight = canvas.height * imgWidth / canvas.width;
-                pdf.addImage(imgData, 'PNG', 0, 10, imgWidth, imgHeight);
+            html2canvas(content, { scale: 2 }).then(function (canvas) {
+                //const imgData = canvas.toDataURL('image/png');
+                const imgData = canvas.toDataURL('image/jpeg', 0.8);
+
+                const pdfWidth = 297; // A4 page width in mm (landscape)
+                const pdfHeight = 210; // A4 page height in mm (landscape)
+                const imgWidth = pdfWidth;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                pdf.addImage(imgData, 'JPEG', 0, 10, imgWidth, imgHeight);
+
                 pdf.save('sheet.pdf');
             });
+
         });
 
 
+<!--    $('#email').click(function() {-->
+<!--            const pdf = new jsPDF({-->
+<!--                orientation: 'landscape',-->
+<!--                unit: 'mm',-->
+<!--                format: 'a4',-->
+<!--            });-->
+
+<!--            const content = $('#content')[0];-->
+<!--            html2canvas(content, { scale: 2 }).then(function (canvas) {-->
+<!--                //const imgData = canvas.toDataURL('image/png');-->
+<!--                const imgData = canvas.toDataURL('image/jpeg', 0.8);-->
+
+<!--                const pdfWidth = 297; // A4 page width in mm (landscape)-->
+<!--                const pdfHeight = 210; // A4 page height in mm (landscape)-->
+<!--                const imgWidth = pdfWidth;-->
+<!--                const imgHeight = (canvas.height * imgWidth) / canvas.width;-->
+
+<!--                pdf.addImage(imgData, 'JPEG', 0, 10, imgWidth, imgHeight);-->
+<!--            // Generate the PDF as a data URI-->
+<!--            const pdfDataUri = pdf.output('datauristring');-->
+
+<!--            // Create a FormData object and append the PDF data-->
+<!--            const formData = new FormData();-->
+<!--            formData.append('pdf_data', pdfDataUri);-->
+
+<!--            // Send the FormData to your Django view using AJAX-->
+<!--            $.ajax({-->
+<!--                type: 'POST',-->
+<!--                url: '/save_pdf_to_model/',-->
+<!--                data: formData,-->
+<!--                processData: false,-->
+<!--                contentType: false,-->
+<!--                success: function(response) {-->
+<!--                    if (response.success) {-->
+<!--                        alert('PDF saved to Django model successfully!');-->
+<!--                    } else {-->
+<!--                        alert('Failed to save PDF to Django model.');-->
+<!--                    }-->
+<!--                },-->
+<!--                error: function() {-->
+<!--                    alert('Error sending PDF to the server.');-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+
 
 </script>
-
 
 </body>
 </html>

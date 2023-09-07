@@ -9,4 +9,5 @@ urlpatterns = [
     path('get_top_bottom_sheet/<str:query>/', views.get_top_bottom_sheet, name='get_top_bottom_sheet'),
     path('get_pre_and_next_sheet/<int:id>/<str:query>/', views.get_pre_and_next_sheet, name='get_pre_and_next_sheet'),
     path('report/', views.report, name='report'),
+    path('save_pdf_to_model/', views.save_pdf_to_model, name='save_pdf_to_model'),
 ]
