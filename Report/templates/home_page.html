@@ -210,7 +210,7 @@
                     <div class="col-lg-4">
                         <div class="input-group">
                             <label class="input-group-text">Amt</label>
-                            <input class="form-control" id="paper_amt" name="paper_amt" placeholder="Enter amt"
+                            <input class="amount form-control" id="paper_amt" name="paper_amt" placeholder="Enter amt"
                                    type="text"
                                    value="{{obj.paper_amt}}">
                         </div>
@@ -231,7 +231,7 @@
                     <div class="col-lg-4">
                         <div class="input-group">
                             <label class="input-group-text">Amt</label>
-                            <input class="form-control" id="lamination_amt" name="lamination_amt"
+                            <input class="amount form-control" id="lamination_amt" name="lamination_amt"
                                    placeholder="Enter amt"
                                    type="text" value="{{obj.lamination_amt}}">
                         </div>
@@ -249,7 +249,7 @@
                     <div class="col-lg-4">
                         <div class="input-group">
                             <label class="input-group-text">Amt</label>
-                            <input class="form-control" id="binding_amt" name="binding_amt" placeholder="Enter amt"
+                            <input class="amount form-control" id="binding_amt" name="binding_amt" placeholder="Enter amt"
                                    type="text" value="{{obj.binding_amt}}">
                         </div>
                     </div>
@@ -267,7 +267,7 @@
                     <div class="col-lg-4">
                         <div class="input-group">
                             <label class="input-group-text">Amt</label>
-                            <input class="form-control" id="gst_amt" name="gst_amt" placeholder="Enter amt" type="text"
+                            <input class="amount form-control" id="gst_amt" name="gst_amt" placeholder="Enter amt" type="text"
                                    value="{{obj.gst_amt}}">
                         </div>
                     </div>
@@ -345,7 +345,7 @@
                                     <label class="input-group-text">Date</label>
                                     <input class="form-control" id="paper_rq_date" name="paper_rq_date"
                                            placeholder="enter date"
-                                           type="text" value="{{obj.job_no}}">
+                                           type="text" value="{{obj.paper_rq_date}}">
                                 </div>
                             </div>
 
@@ -370,7 +370,7 @@
                 <div class="input-group">
                     <label class="input-group-text">Total this bill</label>
                     <input class="form-control" id="total_this_bill" name="total_this_bill" type="text"
-                           value="{{obj.job_no}}">
+                           value="{{obj.total_this_bill}}">
                 </div>
             </div>
 
@@ -378,21 +378,21 @@
                 <div class="input-group">
                     <label class="input-group-text">Previous bill</label>
                     <input class="form-control" id="previous_bill" name="previous_bill" type="text"
-                           value="{{obj.job_no}}">
+                           value="{{obj.previous_bill}}">
                 </div>
             </div>
 
             <div class="col-lg-3">
                 <div class="input-group">
                     <label class="input-group-text">Paid</label>
-                    <input class="form-control" id="paid" name="paid" type="text" value="{{obj.job_no}}">
+                    <input class="form-control" id="paid" name="paid" type="text" value="{{obj.paid}}">
                 </div>
             </div>
 
             <div class="col-lg-3">
                 <div class="input-group">
                     <label class="input-group-text">Closing Bal</label>
-                    <input class="form-control" id="closing_bal" name="closing_bal" type="text" value="{{obj.job_no}}">
+                    <input class="form-control" id="closing_bal" name="closing_bal" type="text" value="{{obj.closing_bal}}">
                 </div>
             </div>
 
@@ -485,6 +485,7 @@
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script src="https://smtpjs.com/v3/smtp.js"></script>
 <script>
+
     $(document).ready(function() {
         var pre_date = $('#date').val();
         if(pre_date == ''){
@@ -493,6 +494,25 @@
             $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-dd-mm'})
         }
     });
+
+    $(document).ready(function () {
+          // Function to calculate the total
+          function calculateTotal() {
+            var total = 0;
+            $('.amount').each(function () {
+              var val = parseFloat($(this).val()) || 0;
+              total += val;
+            });
+            $('#total_this_bill').val(total);
+          }
+
+          // Attach an event listener to all input fields with class 'amount'
+          $('.amount').on('input', calculateTotal);
+
+          // Calculate the initial total
+          calculateTotal();
+    });
+
 
 </script>
 
