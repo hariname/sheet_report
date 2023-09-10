@@ -6,25 +6,31 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .models import SheetReport
 
-def convert_date(date_string, output_format='%Y-%m-%d'):
-    date_object = datetime.strptime(date_string, '%Y-%m-%d')
-    formatted_date = date_object.strftime(output_format)
-    return formatted_date
 
 @csrf_exempt
 def save_pdf_to_model(request):
     if request.method == 'POST':
-        pdf_content = request.POST.get('pdf_data')  # Assuming you send the PDF as a file.
+        pdf_content = request.FILES.get('pdf_file')
         if pdf_content:
-            recipient_list = 'srbc500@gmail.com'
-            message = f"HELLO sanjay"
+            recipient_list = ['srbc500@gmail.com']  # Use a list for recipient emails
+            message = "HELLO sanjay"
             subject = 'Your sheet Generated'
             from_email = 'info@sanjay.solutions'
+
             # Create an EmailMessage instance
-            email = EmailMessage(subject, message, from_email, [recipient_list])
-            email.attach("your_pdf_filename.pdf", pdf_content, 'application/pdf')  # Attach the PDF
-            email.send()
-            return JsonResponse({'success': True})
+            email = EmailMessage(subject, message, from_email, recipient_list)
+
+            # Attach the PDF
+            email.attach("your_pdf_filename.pdf", pdf_content.read(), 'application/pdf')
+
+            try:
+                email.send()
+                return JsonResponse({'success': True})
+            except Exception as e:
+                # Handle any exceptions that may occur during email sending
+                return JsonResponse({'success': False, 'error_message': str(e)})
+        else:
+            return JsonResponse({'success': False, 'error_message': 'PDF data not provided in the request.'})
 
 
 def get_top_bottom_sheet(request, query=''):
@@ -110,10 +116,7 @@ def get_search_sheet(request):
 def home_page(request, id=0):
     if request.method == 'POST':
         form = request.POST
-        job_no = form.get('job_no')
         date = form.get('date')
-        date = convert_date(date)
-        print(date,'===========================date')
         name = form.get('name')
         size = form.get('size')
         page = form.get('page')
@@ -275,8 +278,7 @@ def home_page(request, id=0):
                                                    )
             id = sheet_obj.id
         else:
-            sheet_obj = SheetReport.objects.filter(id=id).update(job_no=job_no,
-                                                                 date=date,
+            sheet_obj = SheetReport.objects.filter(id=id).update(date=date,
                                                                  name=name,
                                                                  size=size,
                                                                  page=page,

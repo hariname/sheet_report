@@ -51,7 +51,7 @@
     {% for obj in obj %}
     <tr>
         <td>{{obj.job_no}}</td>
-        <td>{{obj.date}}</td>
+        <td>{{obj.date|date:'Y-m-d'}}</td>
         <td>{{obj.name}}</td>
         <td>{{obj.size}}</td>
         <td>{{obj.page}}</td>
