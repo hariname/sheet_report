@@ -317,8 +317,11 @@ def home_page(request, id=0):
         obj = ''
         if id != 0:
             obj = SheetReport.objects.get(id=id)
-        closing = SheetReport.objects.last()
-        closing = closing.closing_bal
+        try:
+            closing = SheetReport.objects.last()
+            closing = closing.closing_bal
+        except:
+            closing = ''
         context = {
             'id': id,
             'obj': obj,
