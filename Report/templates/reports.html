@@ -17,33 +17,15 @@
         <th>Job No.</th>
         <th>Date</th>
         <th>Name</th>
-        <th>Size</th>
-        <th>Page</th>
-        <th>Sheet</th>
-        <th>INK</th>
         <th>Plates</th>
-        <th>Rate</th>
-        <th>Amt</th>
         <th>Printing</th>
-        <th>Rate</th>
-        <th>Amt</th>
         <th>Paper</th>
-        <th>Amt</th>
-        <th>Lamination/UV</th>
-        <th>Amt</th>
+        <th>Lamination</th>
         <th>Binding</th>
-        <th>Amt</th>
-        <th>Others / GST</th>
-        <th>Amt</th>
-        <th>PAPER REQUIRED</th>
-        <th>Sheet</th>
-        <th>Quality</th>
-        <th>Size</th>
-        <th>GSM</th>
-        <th>Vendor</th>
-        <th>AMT</th>
-        <th>Date</th>
-        <th>Bank</th>
+        <th>Other / Gst</th>
+        <th>Total</th>
+        <th>Paid</th>
+        <th>Closing</th>
     </tr>
     </thead>
 
@@ -51,38 +33,17 @@
     {% for obj in obj %}
     <tr>
         <td>{{obj.job_no}}</td>
-        <td>{{obj.date|date:'Y-m-d'}}</td>
+        <td>{{obj.header_date|date:'d/m/Y'}}</td>
         <td>{{obj.name}}</td>
-        <td>{{obj.size}}</td>
-        <td>{{obj.page}}</td>
-        <td>{{obj.sheet1}}</td>
-        <td>{{obj.ink}}</td>
-        <td>{{obj.plates_qty}}</td>
-        <td>{{obj.plates_rate}}</td>
         <td>{{obj.plates_amt}}</td>
-        <td>{{obj.printing_qty}}</td>
-        <td>{{obj.printing_rate}}</td>
         <td>{{obj.printing_amt}}</td>
-        <td>{{obj.paper}}</td>
         <td>{{obj.paper_amt}}</td>
-        <td>{{obj.lamination}}</td>
         <td>{{obj.lamination_amt}}</td>
-        <td>{{obj.binding}}</td>
         <td>{{obj.binding_amt}}</td>
-        <td>{{obj.other_gst}}</td>
         <td>{{obj.gst_amt}}</td>
         <td>{{obj.total_this_bill}}</td>
-        <td>{{obj.previous_bill}}</td>
         <td>{{obj.paid}}</td>
         <td>{{obj.closing_bal}}</td>
-        <td>{{obj.paper_rq_sheet}}</td>
-        <td>{{obj.paper_rq_qty}}</td>
-        <td>{{obj.paper_rq_size}}</td>
-        <td>{{obj.paper_rq_gsm}}</td>
-        <td>{{obj.paper_rq_vendor}}</td>
-        <td>{{obj.paper_rq_amt}}</td>
-        <td>{{obj.paper_rq_date}}</td>
-        <td>{{obj.paper_rq_bank}}</td>
     </tr>
     {% endfor%}
     </tbody>

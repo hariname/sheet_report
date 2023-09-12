@@ -116,7 +116,8 @@ def get_search_sheet(request):
 def home_page(request, id=0):
     if request.method == 'POST':
         form = request.POST
-        date = form.get('date')
+        header_date = form.get('date')
+        header_date = datetime.strptime(header_date, '%d/%m/%Y')
         name = form.get('name')
         size = form.get('size')
         page = form.get('page')
@@ -148,6 +149,7 @@ def home_page(request, id=0):
         paper_rq_vendor = form.get('paper_rq_vendor')
         paper_rq_amt = form.get('paper_rq_amt')
         paper_rq_date = form.get('paper_rq_date')
+        paper_rq_date = datetime.strptime(paper_rq_date, '%d/%m/%Y')
         paper_rq_bank = form.get('paper_rq_bank')
 
         if plates_qty:
@@ -202,10 +204,6 @@ def home_page(request, id=0):
             paid = paid
         else:
             paid = 0
-        if closing_bal:
-            closing_bal = closing_bal
-        else:
-            closing_bal = 0
 
         if paper_rq_sheet:
             paper_rq_sheet = paper_rq_sheet
@@ -231,10 +229,7 @@ def home_page(request, id=0):
             paper_rq_amt = paper_rq_amt
         else:
             paper_rq_amt = 0
-        if paper_rq_date:
-            paper_rq_date = paper_rq_date
-        else:
-            paper_rq_date = ''
+
         if paper_rq_bank:
             paper_rq_bank = paper_rq_bank
         else:
@@ -242,7 +237,7 @@ def home_page(request, id=0):
 
         if id == 0:
             sheet_obj = SheetReport.objects.create(job_no=datetime.now().strftime('%H%M%S'),
-                                                   date=date,
+                                                   header_date=header_date,
                                                    name=name,
                                                    size=size,
                                                    page=page,
@@ -265,8 +260,7 @@ def home_page(request, id=0):
                                                    total_this_bill=total_this_bill,
                                                    previous_bill=previous_bill,
                                                    paid=paid,
-                                                   closing_bal=closing_bal,
-
+                                                   closing_bal=int(total_this_bill)+int(previous_bill)-int(paid),
                                                    paper_rq_sheet=paper_rq_sheet,
                                                    paper_rq_qty=paper_rq_qty,
                                                    paper_rq_size=paper_rq_size,
@@ -278,7 +272,7 @@ def home_page(request, id=0):
                                                    )
             id = sheet_obj.id
         else:
-            sheet_obj = SheetReport.objects.filter(id=id).update(date=date,
+            sheet_obj = SheetReport.objects.filter(id=id).update(header_date=header_date,
                                                                  name=name,
                                                                  size=size,
                                                                  page=page,
@@ -301,7 +295,7 @@ def home_page(request, id=0):
                                                                  total_this_bill=total_this_bill,
                                                                  previous_bill=previous_bill,
                                                                  paid=paid,
-                                                                 closing_bal=closing_bal,
+                                                                 closing_bal=previous_bill,
 
                                                                  paper_rq_sheet=paper_rq_sheet,
                                                                  paper_rq_qty=paper_rq_qty,
@@ -319,12 +313,16 @@ def home_page(request, id=0):
             }
             return JsonResponse(context)
     else:
+        closing = ''
         obj = ''
         if id != 0:
             obj = SheetReport.objects.get(id=id)
+        closing = SheetReport.objects.last()
+        closing = closing.closing_bal
         context = {
             'id': id,
             'obj': obj,
+            'closing': closing,
         }
         return render(request, 'home_page.html', context)
 

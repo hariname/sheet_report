@@ -12,34 +12,25 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
 
     <style>
-    /* Add styling for your loader */
-    .loader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: none; /* Hide the loader by default */
-    }
+        /* Add styling for your loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none; /* Hide the loader by default */
+        }
 
-    /* Style the loader's content (e.g., a spinning icon or text) */
-    .loader img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        /* Add more styling as needed */
-    }
-
-
-<!--        #content {-->
-<!--            text-align: center;-->
-<!--            position: absolute;-->
-<!--            top: 50%;-->
-<!--            left: 50%;-->
-<!--            transform: translate(-50%, -50%);-->
-<!--        }-->
+        /* Style the loader's content (e.g., a spinning icon or text) */
+        .loader img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Add more styling as needed */
+        }
 
         body {
             background-color: #f8f9fa;
@@ -72,7 +63,6 @@
 
         input[type="button"] {
             width: 100%;
-<!--            padding: 10px;-->
             background-color: #007bff;
             color: #fff;
             border: none;
@@ -84,6 +74,9 @@
             background-color: #0056b3;
         }
 
+        .paper_required {
+            border-radius: 50px; /* Use a high value for a rounded-pill shape */
+        }
 
     </style>
     <title>Sheet Report</title>
@@ -103,8 +96,7 @@
             <div class="col-lg-3">
                 <div class="input-group">
                     <label class="input-group-text" for="job_no">Date</label>
-                    <!--                    <input class="form-control" id="date" name="date" type="text" value="{{obj.date|date:'Y-m-d'}}">-->
-                    <input class="form-control" id="date" name="date" type="text">
+                    <input class="form-control date_picker" id="date" name="date" type="text" value="{{obj.header_date|date:'d/m/Y'}}">
                 </div>
             </div>
 
@@ -138,7 +130,7 @@
 
             <div class="col-lg-3 mx-auto">
                 <div class="input-group">
-                    <label class="input-group-text">Sheet</label>
+                    <label class="input-group-text">Qty</label>
                     <input class="form-control" id="sheet1" name="sheet1" placeholder="Enter sheet" type="text"
                            value="{{obj.sheet1}}">
                 </div>
@@ -183,7 +175,7 @@
                         <div class="input-group">
                             <label class="input-group-text">Amt</label>
                             <input class="amount form-control" id="plates_amt" name="plates_amt" placeholder="Enter amt"
-                                   type="text" value="{{obj.plates_amt}}">
+                                   type="text" value="{{obj.plates_amt}}" readonly>
                         </div>
                     </div>
                 </div>
@@ -217,7 +209,7 @@
                         <div class="input-group">
                             <label class="input-group-text">Amt</label>
                             <input class="amount form-control" id="printing_amt" name="printing_amt"
-                                   placeholder="Enter amt" type="text" value="{{obj.printing_amt}}">
+                                   placeholder="Enter amt" type="text" value="{{obj.printing_amt}}" readonly>
                         </div>
                     </div>
                 </div>
@@ -300,8 +292,8 @@
             </div>
 
 
-            <div class="col-lg-4 shadow p-2 rounded bg-danger">
-                <h5 class="border bg-warning text-center rounded-pill">PAPER REQUIRED</h5>
+            <div class="col-lg-4">
+                <h5 class="border bg-warning text-center">PAPER REQUIRED</h5>
                 <div class="row">
                     <div class="col-lg-12 mb-3">
                         <div class="input-group">
@@ -368,9 +360,7 @@
                             <div class="col-lg-6">
                                 <div class="input-group">
                                     <label class="input-group-text">Date</label>
-                                    <input class="form-control" id="paper_rq_date" name="paper_rq_date"
-                                           placeholder="enter date"
-                                           type="text" value="{{obj.paper_rq_date}}">
+                                    <input class="form-control date_picker" id="paper_rq_date" name="paper_rq_date" placeholder="enter date" type="text" value="{{obj.paper_rq_date|date:'d/m/Y'}}">
                                 </div>
                             </div>
 
@@ -391,19 +381,20 @@
 
 
         <div class="row mt-4">
+
+
             <div class="col-lg-3">
                 <div class="input-group">
-                    <label class="input-group-text">Total this bill</label>
-                    <input class="form-control" id="total_this_bill" name="total_this_bill" type="text"
-                           value="{{obj.total_this_bill}}">
+                    <label class="input-group-text">Previous Due</label>
+                    <input class="form-control" id="previous_bill" name="previous_bill" type="text"
+                           value="{{closing}}">
                 </div>
             </div>
 
             <div class="col-lg-3">
                 <div class="input-group">
-                    <label class="input-group-text">Previous bill</label>
-                    <input class="form-control" id="previous_bill" name="previous_bill" type="text"
-                           value="{{obj.previous_bill}}">
+                    <label class="input-group-text">Total this bill</label>
+                    <input class="form-control" id="total_this_bill" name="total_this_bill" type="text" value="{{obj.total_this_bill}}">
                 </div>
             </div>
 
@@ -515,70 +506,92 @@
 <script src="https://smtpjs.com/v3/smtp.js"></script>
 
 <script>
-    const platQty = document.getElementById('plates_qty');
-    const platRate = document.getElementById('plates_rate');
-    const platAmt = document.getElementById('plates_amt');
 
-    // Add an event listener to both input fields
-    platQty.addEventListener('keyup', calculateTotal);
-    platRate.addEventListener('keyup', calculateTotal);
+    $(document).ready(function() {
+        const platQty = document.getElementById('plates_qty');
+        const platRate = document.getElementById('plates_rate');
+        const platAmt = document.getElementById('plates_amt');
 
-    // Function to calculate and update the total amount
-    function calculateTotal() {
-        const quantity = parseFloat(platQty.value);
-        const price = parseFloat(platRate.value);
+        // Add an event listener to both input fields
+        platQty.addEventListener('keyup', calculateTotal);
+        platRate.addEventListener('keyup', calculateTotal);
 
-        // Check if both inputs are valid numbers
-        if (!isNaN(quantity) && !isNaN(price)) {
-            const total = quantity * price;
-            platAmt.value = total; // Display with 2 decimal places
-        } else {
-            platAmt.value = '0'; // Display 0 if inputs are invalid
+        // Function to calculate and update the total amount
+        function calculateTotal() {
+            const quantity = parseFloat(platQty.value);
+            const price = parseFloat(platRate.value);
+
+            // Check if both inputs are valid numbers
+            if (!isNaN(quantity) && !isNaN(price)) {
+                const total = quantity * price;
+                platAmt.value = total; // Display with 2 decimal places
+            } else {
+                platAmt.value = '0'; // Display 0 if inputs are invalid
+            }
         }
-    }
+    });
+
+
 
 </script>
 
 <script>
-    const printQty = document.getElementById('printing_qty');
-    const printRate = document.getElementById('printing_rate');
-    const printAmt = document.getElementById('printing_amt');
+    $(document).ready(function() {
+        const printQty = document.getElementById('printing_qty');
+        const printRate = document.getElementById('printing_rate');
+        const printAmt = document.getElementById('printing_amt');
 
-    // Add an event listener to both input fields
-    printQty.addEventListener('keyup', calculateTotal);
-    printRate.addEventListener('keyup', calculateTotal);
+        // Add an event listener to both input fields
+        printQty.addEventListener('keyup', calculateTotal);
+        printRate.addEventListener('keyup', calculateTotal);
 
-    // Function to calculate and update the total amount
-    function calculateTotal() {
-        const quantity = parseFloat(printQty.value);
-        const price = parseFloat(printRate.value);
+        // Function to calculate and update the total amount
+        function calculateTotal() {
+            const quantity = parseFloat(printQty.value);
+            const price = parseFloat(printRate.value);
 
-        // Check if both inputs are valid numbers
-        if (!isNaN(quantity) && !isNaN(price)) {
-            const total = quantity * price;
-            printAmt.value = total;
-        } else {
-            printAmt.value = '0';
+            // Check if both inputs are valid numbers
+            if (!isNaN(quantity) && !isNaN(price)) {
+                const total = quantity * price;
+                printAmt.value = total;
+            } else {
+                printAmt.value = '0';
+            }
         }
-    }
+    });
+</script>
+
+<script>
+
+    $(document).ready(function() {
+        $('#paper_rq_amt').on('input', function(){
+            var input_val =  $(this).val();
+            $('#paid').val(input_val)
+        })
+    });
+
 
 </script>
 <script>
 
     $(document).ready(function() {
-        var pre_date = $('#date').val();
-        if(pre_date == ''){
-            $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-mm-dd'}).datepicker('setDate', 'today');
+
+        var sheet_id = $('#sheet_id').val();
+        if(sheet_id != ''){
+            sheet_id = sheet_id
         }else{
-            $('#date, #paper_rq_date').datepicker({dateFormat: 'yy-mm-dd'})
+            sheet_id = '{{id}}'
         }
+
+        if (sheet_id != 0){
+            $('.date_picker').datepicker({dateFormat: 'dd/mm/yy'})
+        }else{
+            $('.date_picker').datepicker({dateFormat: 'dd/mm/yy'}).datepicker("setDate", "todaye");
+        }
+
     });
 
     $(document).ready(function () {
-          // Function to calculate the total
-          const plates_amt = parseFloat($('#plates_amt').val()) || 0;
-          const printing_amt = parseFloat($('#printing_amt').val()) || 0;
-
 
           function calculateTotal() {
             var total = 0;
@@ -587,7 +600,7 @@
 
               total += val;
             });
-            $('#total_this_bill').val(total + plates_amt + printing_amt);
+            $('#total_this_bill').val(total);
           }
 
           // Attach an event listener to all input fields with class 'amount'
@@ -596,7 +609,6 @@
           // Calculate the initial total
           calculateTotal();
     });
-
 
 </script>
 
@@ -610,12 +622,12 @@
         }else{
             sheet_id = '{{id}}'
         }
-        var form_date = $('#sheet_form').serialize()
+        var form_data = $('#sheet_form').serialize()
         $.ajax(
         {
             type:"POST",
             url: "/"+sheet_id+"/",
-            data:form_date,
+            data:form_data,
             success: function( data )
             {
                 window.location.href = '/'+data.id+'/'

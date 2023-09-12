@@ -3,7 +3,7 @@ from django.db import models
 
 class SheetReport(models.Model):
     job_no = models.CharField(max_length=50)
-    date = models.DateTimeField(auto_now_add=True)
+    header_date = models.DateField()
     name = models.CharField(max_length=50)
 
     size = models.CharField(max_length=50)
@@ -37,12 +37,12 @@ class SheetReport(models.Model):
     closing_bal = models.BigIntegerField(default=0, null=True, blank=True)
 
     paper_rq_sheet = models.CharField(max_length=50, null=True, blank=True)
-    paper_rq_qty = models.IntegerField(null=True, default=0, blank=True)
+    paper_rq_qty = models.CharField(max_length=50, null=True, default='', blank=True)
     paper_rq_size = models.CharField(max_length=50, null=True, blank=True)
     paper_rq_gsm = models.CharField(max_length=50, null=True, blank=True)
     paper_rq_vendor = models.CharField(max_length=50, null=True, blank=True)
     paper_rq_amt = models.IntegerField(default=0, null=True, blank=True)
-    paper_rq_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    paper_rq_date = models.DateField()
     paper_rq_bank = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
