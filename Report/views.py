@@ -1,11 +1,14 @@
+import io
 from datetime import datetime
-
 from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .models import SheetReport
-
+import io
+from django.http import HttpResponse
+from django.db.models import Q
+from xlsxwriter.workbook import Workbook
 
 @csrf_exempt
 def save_pdf_to_model(request):
@@ -336,3 +339,76 @@ def report(request):
         'obj': obj,
     }
     return render(request, 'reports.html', context)
+
+
+def export_history(request, fromD, toD, search):
+    output = io.BytesIO()
+    workbook = Workbook(output, {'in_memory': True})
+    worksheet = workbook.add_worksheet('sheet')
+
+    header_format = workbook.add_format({
+        'border': 1,
+        'bg_color': '#C6EFCE',
+        'bold': True,
+        'text_wrap': True,
+        'valign': 'vcenter',
+        'indent': 1,
+    })
+
+    headings = ['Job No', 'Date', 'Name', 'Plates', 'Printing', 'Paper', 'Lamination', 'Binding', 'Other / Gst', 'Total', 'Paid', 'Closing']
+    for col_num, heading in enumerate(headings):
+        worksheet.write(0, col_num, heading, header_format)
+
+    unlocked_format = workbook.add_format({'locked': False})
+    worksheet.set_column('A:A', 15, unlocked_format)
+    worksheet.set_column('B:B', 15, unlocked_format)
+    worksheet.set_column('C:C', 25, unlocked_format)
+    worksheet.set_column('D:D', 25, unlocked_format)
+    worksheet.set_column('E:E', 25, unlocked_format)
+    worksheet.set_column('F:F', 25, unlocked_format)
+    worksheet.set_column('G:G', 25, unlocked_format)
+    worksheet.set_column('H:H', 25, unlocked_format)
+    worksheet.set_column('I:I', 25, unlocked_format)
+
+    pro_data = SheetReport.objects.all()  # Default queryset
+
+    # if fromD != 'None':
+    #     pro_data = pro_data.filter(header_date=fromD)
+
+    if fromD != 'None' and toD != 'None':
+        pro_data = pro_data.filter(Q(header_date__gte=toD) & Q(header_date__lte=toD))
+
+    if search != 'None':
+        pro_data = pro_data.filter(Q(job_no__iexact=search) | Q(name__iexact=search))
+
+    rows = []
+    for obj in pro_data:
+        job_no = obj.job_no
+        header_date = obj.header_date.strftime("%Y-%m-%d")
+        name = obj.name
+        plates_amt = obj.plates_amt
+        printing_amt = obj.printing_amt
+        paper_amt = obj.paper_amt
+        lamination_amt = obj.lamination_amt
+        binding_amt = obj.binding_amt
+        gst_amt = obj.gst_amt
+        total_this_bill = obj.total_this_bill
+        paid = obj.paid
+        closing_bal = obj.closing_bal
+
+        rows.append([job_no, header_date, name, plates_amt, printing_amt, paper_amt, lamination_amt, binding_amt, gst_amt, total_this_bill, paid, closing_bal])
+
+    for row_num, row_data in enumerate(rows, start=1):
+        for col_num, cell_data in enumerate(row_data):
+            worksheet.write(row_num, col_num, cell_data, unlocked_format)
+
+    workbook.close()
+
+    output.seek(0)
+    response = HttpResponse(
+        output.read(),
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    response['Content-Disposition'] = "attachment; filename=Sheet_Report.xlsx"
+
+    return response
