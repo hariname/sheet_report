@@ -504,6 +504,22 @@
 <script src="https://smtpjs.com/v3/smtp.js"></script>
 
 <script>
+$(document).ready(function() {
+  // Attach an event handler to all input and textarea elements
+  $(":input").on("input", function() {
+    // Get the current value of the input field
+    var currentValue = $(this).val();
+
+    // Transform the value to uppercase
+    var uppercaseValue = currentValue.toUpperCase();
+
+    // Update the input field with the uppercase value
+    $(this).val(uppercaseValue);
+  });
+});
+</script>
+
+<script>
 
     $(document).ready(function() {
         const platQty = document.getElementById('plates_qty');
