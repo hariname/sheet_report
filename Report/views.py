@@ -298,7 +298,7 @@ def home_page(request, id=0):
                                                                  total_this_bill=total_this_bill,
                                                                  previous_bill=previous_bill,
                                                                  paid=paid,
-                                                                 closing_bal=previous_bill,
+                                                                 closing_bal=int(total_this_bill)+int(previous_bill)-int(paid),
 
                                                                  paper_rq_sheet=paper_rq_sheet,
                                                                  paper_rq_qty=paper_rq_qty,
