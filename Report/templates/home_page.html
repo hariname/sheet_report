@@ -89,7 +89,11 @@
             <div class="col-lg-3">
                 <div class="input-group">
                     <label class="input-group-text" for="job_no">Job No.</label>
+                    {% if id == 0 %}
+                    <input class="form-control" id="job_no" name="job_no" type="text" value="{{job_no}}">
+                    {% else %}
                     <input class="form-control" id="job_no" name="job_no" type="text" value="{{obj.job_no}}">
+                    {% endif %}
                 </div>
             </div>
 

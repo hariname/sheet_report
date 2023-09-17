@@ -37,13 +37,20 @@ def save_pdf_to_model(request):
 
 
 def get_top_bottom_sheet(request, query=''):
-    if query == 'top':
-        obj = SheetReport.objects.first()
-    else:
-        obj = SheetReport.objects.last()
+    obj = ''
+    id = 0
+    try:
+        if query == 'top':
+            obj = SheetReport.objects.first()
+            id = obj.id
+        else:
+            obj = SheetReport.objects.last()
+            id = obj.id
+    except:
+        pass
 
     context = {
-        'id': obj.id,
+        'id': id,
         'obj': obj,
     }
     return render(request, 'home_page.html', context)
@@ -117,8 +124,15 @@ def get_search_sheet(request):
 
 # Create your views here.
 def home_page(request, id=0):
+    try:
+        obj_count = SheetReport.objects.last()
+        job_no = int(obj_count.job_no) + 1
+    except:
+        job_no = ''
+
     if request.method == 'POST':
         form = request.POST
+        head_job_no = form.get('job_no')
         header_date = form.get('date')
         header_date = datetime.strptime(header_date, '%d/%m/%Y')
         name = form.get('name')
@@ -239,7 +253,9 @@ def home_page(request, id=0):
             paper_rq_bank = ''
 
         if id == 0:
-            sheet_obj = SheetReport.objects.create(job_no=datetime.now().strftime('%H%M%S'),
+            job_no = int(head_job_no)
+
+            sheet_obj = SheetReport.objects.create(job_no=job_no,
                                                    header_date=header_date,
                                                    name=name,
                                                    size=size,
@@ -317,8 +333,11 @@ def home_page(request, id=0):
     else:
         closing = ''
         obj = ''
-        if id != 0:
-            obj = SheetReport.objects.get(id=id)
+        try:
+            if id != 0:
+                obj = SheetReport.objects.get(id=id)
+        except:
+            obj = ''
         try:
             closing = SheetReport.objects.last()
             closing = closing.closing_bal
@@ -328,6 +347,7 @@ def home_page(request, id=0):
             'id': id,
             'obj': obj,
             'closing': closing,
+            'job_no': job_no,
         }
         return render(request, 'home_page.html', context)
 
