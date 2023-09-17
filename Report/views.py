@@ -80,10 +80,15 @@ def get_search_sheet(request):
     context = {}
     try:
         obj = SheetReport.objects.get(job_no__exact=search)
+        header_date = obj.header_date
+        header_date = datetime.strftime(header_date, '%d/%m/%Y')
+
+        paper_rq_date = obj.paper_rq_date
+        paper_rq_date = datetime.strftime(paper_rq_date, '%d/%m/%Y')
 
         context['id'] = obj.id
         context['job_no'] = obj.job_no
-        context['date'] = obj.date
+        context['date'] = header_date
         context['name'] = obj.name
         context['size'] = obj.size
         context['page'] = obj.page
@@ -113,7 +118,7 @@ def get_search_sheet(request):
         context['paper_rq_gsm'] = obj.paper_rq_gsm
         context['paper_rq_vendor'] = obj.paper_rq_vendor
         context['paper_rq_amt'] = obj.paper_rq_amt
-        context['paper_rq_date'] = obj.paper_rq_date
+        context['paper_rq_date'] = paper_rq_date
         context['paper_rq_bank'] = obj.paper_rq_bank
 
     except Exception as e:
@@ -353,7 +358,7 @@ def home_page(request, id=0):
 
 
 def report(request):
-    obj = SheetReport.objects.all()
+    obj = SheetReport.objects.all().order_by('-id')
     context = {
         'obj': obj,
     }

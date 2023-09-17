@@ -418,7 +418,7 @@
                 <div class="input-group">
                     <label class="input-group-text">Closing Bal</label>
                     <input class="form-control" id="closing_bal" name="closing_bal" type="text"
-                           value="{{obj.closing_bal}}">
+                           value="{{obj.closing_bal}}" readonly>
                 </div>
             </div>
 
@@ -593,7 +593,6 @@ $(document).ready(function() {
         })
     });
 
-
 </script>
 <script>
 
@@ -711,10 +710,11 @@ $(document).ready(function() {
             data: myObject,
             success: function (response) {
                 var responseData = response;
-                console.log(response)
+                console.log(response,'---------------response')
                 $('#sheet_id').val(responseData.id)
                 $('#job_no').val(responseData.job_no)
-                $('#date').val(responseData.header_date)
+                $('#date').val(responseData.date)
+                console.log(responseData.date,'==================responseData.header_date')
                 $('#name').val(responseData.name)
                 $('#size').val(responseData.size)
                 $('#page').val(responseData.page)
@@ -737,7 +737,7 @@ $(document).ready(function() {
                 $('#total_this_bill').val(responseData.total_this_bill)
                 $('#previous_bill').val(responseData.previous_bill)
                 $('#paid').val(responseData.paid)
-<!--                $('#closing_bal').val(responseData.closing_bal)-->
+                $('#closing_bal').val(responseData.closing_bal)
                 $('#paper_rq_sheet').val(responseData.paper_rq_sheet)
                 $('#paper_rq_qty').val(responseData.paper_rq_qty)
                 $('#paper_rq_size').val(responseData.paper_rq_size)
@@ -778,7 +778,6 @@ $(document).ready(function() {
     function get_top_bottom_sheet(str){
         window.location.href = '/get_top_bottom_sheet/'+str+'/'
     }
-
 
 </script>
 
