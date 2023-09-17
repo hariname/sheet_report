@@ -488,12 +488,7 @@
                         </div>
 
                         <div class="col-lg-3">
-                            {% if id == 0 %}
-                            <input class="btn btn-sm btn-primary" disabled id="email" name="email" type="button"
-                                   value="EMAIL">
-                            {% else %}
                             <input class="btn btn-sm btn-primary" id="email" name="email" type="button" value="EMAIL">
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -843,7 +838,16 @@ $('#email').click(function() {
             contentType: false,
             success: function(response) {
                 if (response.success) {
-                    alert('PDF saved to Django model successfully!');
+                    Swal.fire({
+                        title: 'Done!',
+                        text: 'Pdf sent successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href
+                        }
+                    });
                 } else {
                     alert('Failed to save PDF to Django model.');
                 }
