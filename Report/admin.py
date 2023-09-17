@@ -11,7 +11,7 @@ class LookUpAdmin(admin.ModelAdmin):
 
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('site_title',)
 
 
 class SheetAdmin(admin.ModelAdmin):

@@ -6,7 +6,7 @@ class LookUp(models.Model):
     img = models.ImageField(upload_to='lookup_image', null=True, blank=True)
 
     def __str__(self):
-        return self.site_title
+        return self.title
 
 
 class SiteInfo(models.Model):
