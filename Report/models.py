@@ -1,11 +1,21 @@
 from django.db import models
 
+
+class LookUp(models.Model):
+    title = models.CharField(max_length=500)
+    img = models.ImageField(upload_to='lookup_image', null=True, blank=True)
+
+    def __str__(self):
+        return self.site_title
+
+
 class SiteInfo(models.Model):
     site_title = models.CharField(max_length=500)
     site_logo = models.ImageField(upload_to='site_logo', null=True, blank=True)
 
     def __str__(self):
         return self.site_title
+
 
 class SheetReport(models.Model):
     job_no = models.CharField(max_length=50)
