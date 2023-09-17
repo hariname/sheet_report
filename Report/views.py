@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from .models import SheetReport
+from .models import SheetReport, LookUp
 import io
 from django.http import HttpResponse
 from django.db.models import Q
@@ -339,6 +339,11 @@ def home_page(request, id=0):
             }
             return JsonResponse(context)
     else:
+        try:
+            loader = LookUp.objects.get(title='loader')
+        except:
+            loader = ''
+
         closing = ''
         obj = ''
         try:
@@ -356,6 +361,7 @@ def home_page(request, id=0):
             'obj': obj,
             'closing': closing,
             'job_no': job_no,
+            'loader': loader,
         }
         return render(request, 'home_page.html', context)
 
