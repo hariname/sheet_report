@@ -295,6 +295,7 @@ def home_page(request, id=0):
                                                    paper_rq_bank=paper_rq_bank,
                                                    )
             id = sheet_obj.id
+            msg = 'Sheet Created'
         else:
             sheet_obj = SheetReport.objects.filter(id=id).update(header_date=header_date,
                                                                  name=name,
@@ -329,10 +330,12 @@ def home_page(request, id=0):
                                                                  paper_rq_date=paper_rq_date,
                                                                  paper_rq_bank=paper_rq_bank,
                                                                  )
+            msg = 'Sheet Updated'
 
         if sheet_obj:
             context = {
                 'id': id,
+                'msg': msg,
             }
             return JsonResponse(context)
     else:

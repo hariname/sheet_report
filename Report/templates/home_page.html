@@ -79,6 +79,21 @@
         }
 
     </style>
+    <style>
+        /* Customize the size of the SweetAlert modal */
+        .swal2-popup {
+            width: 20px; /* Adjust the width as needed */
+        }
+
+        /* Customize the font size and other styles */
+        .swal2-title {
+            font-size: 16px; /* Adjust the title font size */
+        }
+
+        .swal2-content {
+            font-size: 14px; /* Adjust the content font size */
+        }
+    </style>
     <title>Sheet Report</title>
 </head>
 <body>
@@ -511,6 +526,7 @@
 
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script src="https://smtpjs.com/v3/smtp.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script>
 $(document).ready(function() {
@@ -652,7 +668,18 @@ $(document).ready(function() {
             data:form_data,
             success: function( data )
             {
-                window.location.href = '/'+data.id+'/'
+                console.log(data,'-----------------------data')
+                Swal.fire({
+                    title: 'Done!',
+                    text: data.msg,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/'+data.id+'/'
+                    }
+                });
+
             }
         })
     });
