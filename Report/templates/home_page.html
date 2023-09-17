@@ -175,7 +175,7 @@
                         <div class="input-group">
                             <label class="input-group-text">Amt</label>
                             <input class="amount form-control" id="plates_amt" name="plates_amt" placeholder="Enter amt"
-                                   type="text" value="{{obj.plates_amt}}" readonly>
+                                   type="text" value="{{obj.plates_amt}}">
                         </div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
                         <div class="input-group">
                             <label class="input-group-text">Amt</label>
                             <input class="amount form-control" id="printing_amt" name="printing_amt"
-                                   placeholder="Enter amt" type="text" value="{{obj.printing_amt}}" readonly>
+                                   placeholder="Enter amt" type="text" value="{{obj.printing_amt}}">
                         </div>
                     </div>
                 </div>
@@ -236,7 +236,7 @@
                 <div class="row mt-3">
                     <div class="col-lg-8">
                         <div class="input-group">
-                            <label class="input-group-text">Lamination/UV</label>
+                            <label class="input-group-text">LAM / UV / Other</label>
                             <input class="form-control" id="lamination" name="lamination" type="text"
                                    value="{{obj.lamination}}">
                         </div>
@@ -274,7 +274,7 @@
                 <div class="row mt-3">
                     <div class="col-lg-8">
                         <div class="input-group">
-                            <label class="input-group-text">Others / GST</label>
+                            <label class="input-group-text">GST</label>
                             <input class="form-control" id="other_gst" name="other_gst" type="text"
                                    value="{{obj.other_gst}}">
                         </div>
@@ -386,8 +386,12 @@
             <div class="col-lg-3">
                 <div class="input-group">
                     <label class="input-group-text">Previous Due</label>
-                    <input class="form-control" id="previous_bill" name="previous_bill" type="text"
-                           value="{{closing}}">
+<!--                    <input type="text" value="{{id}}">-->
+                    {% if id == 0 %}
+                    <input class="form-control" id="previous_bill" name="previous_bill" type="text" value="{{closing}}">
+                    {% else %}
+                    <input class="form-control" id="previous_bill" name="previous_bill" type="text" value="{{obj.previous_bill}}">
+                    {% endif %}
                 </div>
             </div>
 
@@ -395,6 +399,7 @@
                 <div class="input-group">
                     <label class="input-group-text">Total this bill</label>
                     <input class="form-control" id="total_this_bill" name="total_this_bill" type="text" value="{{obj.total_this_bill}}">
+
                 </div>
             </div>
 
@@ -409,7 +414,7 @@
                 <div class="input-group">
                     <label class="input-group-text">Closing Bal</label>
                     <input class="form-control" id="closing_bal" name="closing_bal" type="text"
-                           value="">
+                           value="{{obj.closing_bal}}">
                 </div>
             </div>
 
