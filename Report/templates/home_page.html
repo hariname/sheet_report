@@ -723,11 +723,9 @@ $(document).ready(function() {
             data: myObject,
             success: function (response) {
                 var responseData = response;
-                console.log(response,'---------------response')
                 $('#sheet_id').val(responseData.id)
                 $('#job_no').val(responseData.job_no)
                 $('#date').val(responseData.date)
-                console.log(responseData.date,'==================responseData.header_date')
                 $('#name').val(responseData.name)
                 $('#size').val(responseData.size)
                 $('#page').val(responseData.page)

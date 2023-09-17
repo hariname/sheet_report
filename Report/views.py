@@ -79,7 +79,7 @@ def get_search_sheet(request):
     search = request.GET.get('search')
     context = {}
     try:
-        obj = SheetReport.objects.get(job_no__exact=search)
+        obj = SheetReport.objects.get(Q(job_no__iexact=search) | Q(name__icontains=search))
         header_date = obj.header_date
         header_date = datetime.strftime(header_date, '%d/%m/%Y')
 
