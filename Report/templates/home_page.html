@@ -79,21 +79,6 @@
         }
 
     </style>
-    <style>
-        /* Customize the size of the SweetAlert modal */
-        .swal2-popup {
-            width: 20px; /* Adjust the width as needed */
-        }
-
-        /* Customize the font size and other styles */
-        .swal2-title {
-            font-size: 16px; /* Adjust the title font size */
-        }
-
-        .swal2-content {
-            font-size: 14px; /* Adjust the content font size */
-        }
-    </style>
     <title>Sheet Report</title>
 </head>
 <body>
@@ -661,6 +646,9 @@ $(document).ready(function() {
             type:"POST",
             url: "/"+sheet_id+"/",
             data:form_data,
+            beforeSend: function() {
+                $('.loader').show();
+            },
             success: function( data )
             {
                 console.log(data,'-----------------------data')
@@ -675,6 +663,9 @@ $(document).ready(function() {
                     }
                 });
 
+            },
+            complete: function() {
+                $('.loader').hide();
             }
         })
     });
