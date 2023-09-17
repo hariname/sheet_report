@@ -89,7 +89,7 @@
             <div class="col-lg-3">
                 <div class="input-group">
                     <label class="input-group-text" for="job_no">Job No.</label>
-                    {% if id == 0 %}
+                    {% if obj == '' %}
                     <input class="form-control" id="job_no" name="job_no" type="text" value="{{job_no}}">
                     {% else %}
                     <input class="form-control" id="job_no" name="job_no" type="text" value="{{obj.job_no}}">
@@ -458,7 +458,7 @@
                             <input class="btn btn-sm btn-primary" id="new" name="new" type="button" value="NEW">
                         </div>
                         <div class="col-lg-3">
-                            {% if id == 0 %}
+                            {% if obj == '' %}
                             <input class="btn btn-sm btn-primary" id="save_and_update" name="edit" type="button"
                                    value="Save">
                             {% else %}
@@ -596,12 +596,13 @@ $(document).ready(function() {
 
         var sheet_id = $('#sheet_id').val();
         if(sheet_id != ''){
-            sheet_id = sheet_id
+            var sheet_id = sheet_id
         }else{
-            sheet_id = '{{id}}'
+            var sheet_id = '{{id}}'
+            var obj = '{{obj}}'
         }
 
-        if (sheet_id != 0){
+        if (sheet_id != 0 && obj != ''){
             $('.date_picker').datepicker({dateFormat: 'dd/mm/yy'})
         }else{
             $('.date_picker').datepicker({dateFormat: 'dd/mm/yy'}).datepicker("setDate", "todaye");
@@ -636,9 +637,15 @@ $(document).ready(function() {
         event.preventDefault();
         var sheet_id = $('#sheet_id').val();
         if(sheet_id != ''){
-            sheet_id = sheet_id
+            var sheet_id = sheet_id
         }else{
-            sheet_id = '{{id}}'
+            var sheet_id = '{{id}}'
+            var obj = '{{obj}}'
+            if (obj != '' && sheet_id != 0){
+                var sheet_id = sheet_id
+            }else{
+                var sheet_id = 0
+            }
         }
         var form_data = $('#sheet_form').serialize()
         $.ajax(
@@ -781,9 +788,8 @@ $(document).ready(function() {
         if( id != 0){
             window.location.href = '/get_pre_and_next_sheet/'+id+'/'+str+'/'
         }else{
-            alert('please select first top or bottom sheet')
+            alert('No Record Found!')
         }
-
     }
 
     function get_top_bottom_sheet(str){

@@ -129,12 +129,6 @@ def get_search_sheet(request):
 
 # Create your views here.
 def home_page(request, id=0):
-    try:
-        obj_count = SheetReport.objects.last()
-        job_no = int(obj_count.job_no) + 1
-    except:
-        job_no = ''
-
     if request.method == 'POST':
         form = request.POST
         head_job_no = form.get('job_no')
@@ -339,23 +333,33 @@ def home_page(request, id=0):
             }
             return JsonResponse(context)
     else:
+        closing = ''
+        obj = ''
+
         try:
             loader = LookUp.objects.get(title='loader')
         except:
             loader = ''
 
-        closing = ''
-        obj = ''
         try:
             if id != 0:
                 obj = SheetReport.objects.get(id=id)
         except:
             obj = ''
+
+        try:
+            obj_count = SheetReport.objects.last()
+            job_no = int(obj_count.job_no) + 1
+            id = int(obj_count.id)
+        except:
+            job_no = ''
+
         try:
             closing = SheetReport.objects.last()
             closing = closing.closing_bal
         except:
             closing = ''
+
         context = {
             'id': id,
             'obj': obj,
